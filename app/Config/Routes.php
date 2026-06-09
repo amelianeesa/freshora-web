@@ -49,3 +49,8 @@ $routes->group('admin', function($routes) {
     $routes->post('settings/update', 'Admin::settings_update');
     $routes->post('password/update', 'Admin::password_update');
 });
+
+$routes->group('api', function($routes) {
+    $routes->get('services', 'Api\Services::index');
+    $routes->resource('orders', ['controller' => 'Api\Orders']);
+});
