@@ -55,6 +55,11 @@ $routes->group('api', function($routes) {
     $routes->resource('orders', ['controller' => 'Api\Orders']);
 });
 
+$routes->options('api/registrasi',     'App\Controllers\Api\RegistrasiController::registrasi');
+$routes->options('api/login',          'App\Controllers\Api\LoginController::login');
+$routes->options('api/logout',         'App\Controllers\Api\UserController::logout');
+$routes->options('api/profile',        'App\Controllers\Api\UserController::profile');
+$routes->options('api/profile/update', 'App\Controllers\Api\UserController::updateProfile');
 // =============================================
 // API Routes - Freshora Mobile
 // =============================================
