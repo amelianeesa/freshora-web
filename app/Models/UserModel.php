@@ -18,7 +18,7 @@ class UserModel extends Model
         'phone', 
         'address', 
         'profile_image', 
-        'role',          // ← tambahkan ini
+        'role',          
         'created_at'
     ];
 

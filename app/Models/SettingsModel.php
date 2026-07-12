@@ -2,11 +2,12 @@
 namespace App\Models;
 use CodeIgniter\Model;
 
-class SettingModel extends Model {
+class SettingsModel extends Model {
     protected $table = 'settings';
     protected $primaryKey = 'id';
     protected $allowedFields = [
         'price_daily', 'price_express', 'price_dry', 'price_iron', 'price_complete',
-        'desc_daily', 'desc_express', 'desc_dry', 'desc_iron', 'desc_complete'
+        'desc_daily', 'desc_express', 'desc_dry', 'desc_iron', 'desc_complete',
+        'bank_name', 'bank_number', 'bank_holder', 'whatsapp_admin', 'qris_image'
     ];
 }

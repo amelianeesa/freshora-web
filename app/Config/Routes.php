@@ -53,6 +53,7 @@ $routes->group('admin', function($routes) {
 $routes->group('api', function($routes) {
     $routes->get('services', 'Api\Services::index');
     $routes->resource('orders', ['controller' => 'Api\Orders']);
+    $routes->get('settings', 'Api\Settings::index');
 });
 
 $routes->options('api/registrasi',     'App\Controllers\Api\RegistrasiController::registrasi');
@@ -69,4 +70,5 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
     $routes->post('logout',          'UserController::logout');
     $routes->get('profile',          'UserController::profile');
     $routes->post('profile/update',  'UserController::updateProfile');
+    $routes->get('image/(:segment)', 'UserController::image/$1');
 });
