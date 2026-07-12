@@ -48,19 +48,26 @@ $routes->group('admin', function($routes) {
     $routes->get('settings', 'Admin::settings');
     $routes->post('settings/update', 'Admin::settings_update');
     $routes->post('password/update', 'Admin::password_update');
+    $routes->post('banner/add', 'Admin::banner_add');
+    $routes->get('banner/delete/(:num)', 'Admin::banner_delete/$1');
 });
 
 $routes->group('api', function($routes) {
     $routes->get('services', 'Api\Services::index');
     $routes->resource('orders', ['controller' => 'Api\Orders']);
     $routes->get('settings', 'Api\Settings::index');
+    $routes->get('laundry_image/(:segment)', 'Api\Orders::image/$1');
+    $routes->get('banners', 'Api\Banners::index');
+    $routes->get('banner_image/(:segment)', 'Api\Banners::image/$1');
 });
 
 $routes->options('api/registrasi',     'App\Controllers\Api\RegistrasiController::registrasi');
 $routes->options('api/login',          'App\Controllers\Api\LoginController::login');
-$routes->options('api/logout',         'App\Controllers\Api\UserController::logout');
+$routes->options('api/logout',         'App\Controllers\Api\LogoutController::logout');
 $routes->options('api/profile',        'App\Controllers\Api\UserController::profile');
 $routes->options('api/profile/update', 'App\Controllers\Api\UserController::updateProfile');
+$routes->options('api/orders',         'Api\Orders::index');
+$routes->options('api/banners',        'Api\Banners::index');
 // =============================================
 // API Routes - Freshora Mobile
 // =============================================

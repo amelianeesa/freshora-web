@@ -59,4 +59,19 @@ class Orders extends ResourceController {
 
         return $this->respond(['status' => true, 'data' => $order]);
     }
+
+    // GET /api/laundry_image/{filename}
+    public function image($filename)
+    {
+        $path = FCPATH . 'uploads/laundry/' . $filename;
+        if (file_exists($path)) {
+            $mime = mime_content_type($path);
+            header('Access-Control-Allow-Origin: *');
+            header('Access-Control-Allow-Methods: GET, OPTIONS');
+            header('Content-Type: ' . $mime);
+            readfile($path);
+            exit;
+        }
+        return $this->failNotFound('Image not found');
+    }
 }

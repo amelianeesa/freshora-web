@@ -95,9 +95,11 @@ class Admin extends BaseController
         }
 
         $settingsModel = new \App\Models\SettingsModel();
+        $bannerModel = new \App\Models\BannerModel();
         
         // Ambil data settings (ID 1)
         $data['settings'] = $settingsModel->find(1);
+        $data['banners'] = $bannerModel->orderBy('created_at', 'DESC')->findAll();
 
         return view('admin/settings', $data);
     }
@@ -162,5 +164,55 @@ class Admin extends BaseController
         return redirect()->to('/admin/settings')->with('success', 'Password berhasil diubah!');
     }
 
+    public function banner_add()
+    {
+        if (!session()->get('isLoggedIn') || session()->get('role') != 'admin') {
+            return redirect()->to('/login');
+        }
+
+        $bannerModel = new \App\Models\BannerModel();
+        
+        if ($imagefiles = $this->request->getFileMultiple('banner_images')) {
+            $uploaded = false;
+            foreach ($imagefiles as $foto) {
+                if ($foto->isValid() && !$foto->hasMoved()) {
+                    $namaFoto = $foto->getRandomName();
+                    $foto->move('uploads/banners', $namaFoto);
+                    
+                    $bannerModel->insert([
+                        'image' => $namaFoto,
+                        'created_at' => date('Y-m-d H:i:s')
+                    ]);
+                    $uploaded = true;
+                }
+            }
+            if ($uploaded) {
+                return redirect()->to('/admin/settings')->with('success', 'Banner berhasil ditambahkan!');
+            }
+        }
+
+        return redirect()->to('/admin/settings')->with('error', 'Gagal mengupload banner.');
+    }
+
+    public function banner_delete($id)
+    {
+        if (!session()->get('isLoggedIn') || session()->get('role') != 'admin') {
+            return redirect()->to('/login');
+        }
+
+        $bannerModel = new \App\Models\BannerModel();
+        $banner = $bannerModel->find($id);
+
+        if ($banner) {
+            $path = FCPATH . 'uploads/banners/' . $banner['image'];
+            if (file_exists($path)) {
+                unlink($path);
+            }
+            $bannerModel->delete($id);
+            return redirect()->to('/admin/settings')->with('success', 'Banner berhasil dihapus!');
+        }
+
+        return redirect()->to('/admin/settings')->with('error', 'Banner tidak ditemukan.');
+    }
     
 }

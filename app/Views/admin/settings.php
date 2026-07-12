@@ -123,6 +123,41 @@
             </div>
 
         </div>
+
+        <div class="admin-row-split" style="margin-top: 30px;">
+            <div class="admin-col-left" style="flex: 1;">
+                <div class="admin-card">
+                    <h3 style="color: #660055; margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 15px;">
+                        <i class="fas fa-images"></i> Kelola Banner Aplikasi
+                    </h3>
+
+                    <form action="<?= base_url('admin/banner/add') ?>" method="post" enctype="multipart/form-data">
+                        <label class="admin-label">Upload Banner Baru (Bisa Pilih Banyak Sekaligus)</label>
+                        <input type="file" name="banner_images[]" class="admin-input" accept="image/*" multiple required>
+                        <button type="submit" class="btn-admin-save" style="margin-top: 10px;">
+                            <i class="fas fa-upload"></i> Upload
+                        </button>
+                    </form>
+
+                    <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                        <?php if(!empty($banners)): ?>
+                            <?php foreach($banners as $b): ?>
+                                <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; position: relative;">
+                                    <img src="<?= base_url('uploads/banners/' . $b['image']) ?>" alt="Banner" style="width: 100%; height: 120px; object-fit: cover;">
+                                    <a href="<?= base_url('admin/banner/delete/' . $b['id']) ?>" onclick="return confirm('Hapus banner ini?')" style="position: absolute; top: 5px; right: 5px; background: red; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none; font-size: 12px;">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p style="color: #888; font-size: 14px;">Belum ada banner.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
